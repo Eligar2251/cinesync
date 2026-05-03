@@ -1,0 +1,44 @@
+/* components/Player/SyncIndicator.module.css */
+.indicator {
+  position: absolute;
+  bottom: 56px; /* above controls bar */
+  left: 12px;
+  z-index: 5;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  background: rgba(0, 0, 0, 0.55);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 100px;
+  backdrop-filter: blur(8px);
+  pointer-events: none;
+}
+
+.dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  background: var(--warning);
+  transition: background var(--transition-normal);
+}
+
+.dot[data-synced="true"] {
+  background: var(--success);
+  /* subtle pulse */
+  animation: pulse 2.5s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.55; }
+}
+
+.label {
+  font-size: 11px;
+  font-weight: 500;
+  color: rgba(240, 237, 232, 0.65);
+  white-space: nowrap;
+  letter-spacing: 0.02em;
+}

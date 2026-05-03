@@ -1,0 +1,108 @@
+/* components/Chat/ChatInput.module.css */
+.wrapper {
+  position: relative;
+  border-top: 1px solid var(--border);
+  flex-shrink: 0;
+  background: var(--bg-chat);
+}
+
+.inputRow {
+  display: flex;
+  align-items: flex-end;
+  gap: 6px;
+  padding: 10px 10px 10px 8px;
+}
+
+.emojiToggle {
+  flex-shrink: 0;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  border-radius: var(--radius-sm);
+  transition: background var(--transition-fast);
+  align-self: flex-end;
+  margin-bottom: 1px;
+}
+
+.emojiToggle:hover { background: rgba(255,255,255,0.05); }
+
+.emojiIcon {
+  color: var(--text-muted);
+  transition: color var(--transition-fast);
+}
+
+.emojiIcon[data-active="true"] { color: var(--accent); }
+
+.textarea {
+  flex: 1;
+  background: transparent;
+  border: none;
+  color: var(--text-primary);
+  font-size: 13px;
+  font-family: var(--font-ui);
+  line-height: 1.55;
+  resize: none;
+  outline: none;
+  caret-color: var(--accent);
+  min-height: 20px;
+  max-height: 120px;
+  padding: 6px 0;
+  overflow-y: auto;
+}
+
+.textarea::placeholder { color: var(--text-muted); }
+
+/* Thin scrollbar for textarea */
+.textarea::-webkit-scrollbar { width: 2px; }
+.textarea::-webkit-scrollbar-thumb { background: #333; }
+
+.sendBtn {
+  flex-shrink: 0;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  border-radius: var(--radius-sm);
+  color: var(--text-muted);
+  cursor: pointer;
+  align-self: flex-end;
+  margin-bottom: 1px;
+  opacity: 0;
+  transform: scale(0.8);
+  transition:
+    opacity var(--transition-fast),
+    transform var(--transition-fast),
+    color var(--transition-fast),
+    background var(--transition-fast);
+  pointer-events: none;
+}
+
+.sendBtn[data-visible="true"] {
+  opacity: 1;
+  transform: scale(1);
+  pointer-events: auto;
+  color: var(--accent);
+}
+
+.sendBtn:hover:not(:disabled) { background: rgba(232, 201, 122, 0.1); }
+
+.charCount {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  font-size: 10px;
+  color: var(--text-muted);
+  font-variant-numeric: tabular-nums;
+  transition: color var(--transition-fast);
+  pointer-events: none;
+}
+
+.charCount[data-warn="true"] { color: var(--danger); }

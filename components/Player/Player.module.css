@@ -1,0 +1,96 @@
+/* components/Player/Player.module.css */
+.wrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background: #000;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* Sync flash — CSS animation, not Framer Motion = perf */
+.wrapper[data-sync-flash="true"] .iframeContainer {
+  animation: syncFlash 600ms ease forwards;
+}
+
+@keyframes syncFlash {
+  0%   { box-shadow: inset 0 0 0 0px rgba(232, 201, 122, 0); }
+  20%  { box-shadow: inset 0 0 0 2px rgba(232, 201, 122, 0.8); }
+  100% { box-shadow: inset 0 0 0 2px rgba(232, 201, 122, 0); }
+}
+
+.iframeContainer {
+  position: relative;
+  width: 100%;
+  flex: 1;
+  background: #000;
+  min-height: 0;
+}
+
+.iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: none;
+  border-radius: 0;
+  display: block;
+}
+
+/* Cinematic vignette — radial, edges only */
+.vignette {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(
+    ellipse at center,
+    transparent 60%,
+    rgba(0, 0, 0, 0.35) 100%
+  );
+  z-index: 1;
+}
+
+/* Controls overlay — sits above iframe */
+.controlsOverlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 10;
+  pointer-events: none;
+}
+
+.controlsOverlay > * {
+  pointer-events: auto;
+}
+
+/* No source state */
+.noSource {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+}
+
+.noSourceIcon {
+  font-size: 36px;
+  color: var(--text-muted);
+  opacity: 0.3;
+}
+
+.noSourceText {
+  font-family: var(--font-display);
+  font-size: 18px;
+  color: var(--text-muted);
+  opacity: 0.5;
+}
+
+.noSourceSub {
+  font-size: 13px;
+  color: var(--text-muted);
+  opacity: 0.35;
+}

@@ -1,0 +1,93 @@
+/* components/Search/MovieGrid.module.css */
+.homeGrid {
+  display: flex;
+  flex-direction: column;
+  gap: 48px;
+}
+
+/* ─── Row ─────────────────────────────────────────── */
+.row {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.rowHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 4px;
+}
+
+.rowTitle {
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: 400;
+  color: var(--text-primary);
+  letter-spacing: -0.02em;
+}
+
+.rowControls {
+  display: flex;
+  gap: 4px;
+}
+
+.scrollBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: var(--radius-sm);
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: color var(--transition-fast), border-color var(--transition-fast);
+}
+.scrollBtn:hover {
+  color: var(--text-primary);
+  border-color: rgba(255,255,255,0.12);
+}
+
+.rowScroll {
+  display: flex;
+  gap: 12px;
+  overflow-x: auto;
+  padding-bottom: 8px;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+}
+
+.rowScroll > * { scroll-snap-align: start; }
+
+/* Hide scrollbar in row */
+.rowScroll::-webkit-scrollbar { height: 0; }
+
+/* ─── Search Results ──────────────────────────────── */
+.searchResults {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.searchTitle {
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: 400;
+  color: var(--text-primary);
+  letter-spacing: -0.02em;
+  padding: 0 4px;
+}
+
+.searchGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+  gap: 16px 12px;
+}
+
+@media (max-width: 480px) {
+  .searchGrid {
+    grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+  }
+}

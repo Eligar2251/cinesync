@@ -1,0 +1,51 @@
+/* components/Player/ProviderSelector.module.css */
+.wrapper {
+  display: flex;
+  align-items: center;
+  gap: 0;
+}
+
+.tab {
+  position: relative;
+  padding: 6px 14px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 12px;
+  font-family: var(--font-ui);
+  font-weight: 500;
+  color: rgba(240, 237, 232, 0.5);
+  letter-spacing: 0.02em;
+  transition: color var(--transition-fast);
+  white-space: nowrap;
+}
+
+.tab[data-active="true"] {
+  color: var(--accent);
+}
+
+.tab[data-disabled="true"] {
+  cursor: default;
+  opacity: 0.6;
+}
+
+.tab:not([data-disabled="true"]):hover {
+  color: rgba(240, 237, 232, 0.8);
+}
+
+.tab[data-active="true"]:hover {
+  color: var(--accent);
+}
+
+.label { position: relative; z-index: 1; }
+
+/* Gold underline indicator */
+.indicator {
+  position: absolute;
+  bottom: 0;
+  left: 14px;
+  right: 14px;
+  height: 1.5px;
+  background: var(--accent);
+  border-radius: 1px;
+}
