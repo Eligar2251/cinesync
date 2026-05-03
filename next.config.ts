@@ -2,9 +2,6 @@
 import type { NextConfig } from 'next'
 
 const nextConfig: NextConfig = {
-  experimental: {
-    optimizeCss: true,
-  },
   images: {
     remotePatterns: [
       {
@@ -32,7 +29,6 @@ const nextConfig: NextConfig = {
     dangerouslyAllowSVG: true,
     contentDispositionType: 'attachment',
   },
-  // Для Vercel — убедись что api роуты не кэшируются
   async headers() {
     return [
       {

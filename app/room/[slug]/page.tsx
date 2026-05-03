@@ -1,15 +1,17 @@
 // app/room/[slug]/page.tsx
 import { Suspense } from 'react'
-import { RoomPageClient } from './page-client' // Новый компонент
+import { RoomPageClient } from './page-client'
 
 interface PageProps {
-  params: { slug: string }
+  params: Promise<{ slug: string }>
 }
 
-export default function RoomPage({ params }: PageProps) {
+export default async function RoomPage({ params }: PageProps) {
+  const { slug } = await params
+
   return (
     <Suspense fallback={null}>
-      <RoomPageClient slug={params.slug} />
+      <RoomPageClient slug={slug} />
     </Suspense>
   )
 }
