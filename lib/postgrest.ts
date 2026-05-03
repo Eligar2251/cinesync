@@ -1,5 +1,5 @@
 // lib/postgrest.ts
-const POSTGREST_URL = process.env.POSTGREST_URL ?? 'http://api.localhost'
+const POSTGREST_URL = process.env.POSTGREST_URL ?? 'http://127.0.0.1:3003'
 
 type RequestOptions = {
   method?: 'GET' | 'POST' | 'PATCH' | 'DELETE'
@@ -13,21 +13,33 @@ async function pgRequest<T>(
   path: string,
   opts: RequestOptions = {}
 ): Promise<T> {
-  const { method = 'GET', body, token, headers = {}, prefer } = opts
+  const {
+    method = 'GET',
+    body,
+    token,
+    headers = {},
+    prefer,
+  } = opts
 
   const reqHeaders: Record<string, string> = {
-    'Content-Type': 'application/json',
     Accept: 'application/json',
+    'Content-Type': 'application/json',
     ...headers,
   }
 
-  if (token) reqHeaders['Authorization'] = `Bearer ${token}`
-  if (prefer) reqHeaders['Prefer'] = prefer
+  if (token) {
+    reqHeaders.Authorization = `Bearer ${token}`
+  }
+
+  if (prefer) {
+    reqHeaders.Prefer = prefer
+  }
 
   const res = await fetch(`${POSTGREST_URL}/${path}`, {
     method,
     headers: reqHeaders,
     body: body !== undefined ? JSON.stringify(body) : undefined,
+    cache: 'no-store',
   })
 
   if (!res.ok) {
@@ -36,19 +48,41 @@ async function pgRequest<T>(
   }
 
   const text = await res.text()
-  return text ? JSON.parse(text) : ([] as unknown as T)
+  return text ? JSON.parse(text) : ([] as T)
 }
 
 export const db = {
-  get: <T>(path: string, opts?: Omit<RequestOptions, 'method' | 'body'>) =>
-    pgRequest<T>(path, { ...opts, method: 'GET' }),
+  get: <T>(
+    path: string,
+    opts?: Omit<RequestOptions, 'method' | 'body'>
+  ) => pgRequest<T>(path, { ...opts, method: 'GET' }),
 
-  post: <T>(path: string, body: unknown, opts?: Omit<RequestOptions, 'method'>) =>
-    pgRequest<T>(path, { ...opts, method: 'POST', body, prefer: 'return=representation' }),
+  post: <T>(
+    path: string,
+    body: unknown,
+    opts?: Omit<RequestOptions, 'method'>
+  ) =>
+    pgRequest<T>(path, {
+      ...opts,
+      method: 'POST',
+      body,
+      prefer: opts?.prefer ?? 'return=representation',
+    }),
 
-  patch: <T>(path: string, body: unknown, opts?: Omit<RequestOptions, 'method'>) =>
-    pgRequest<T>(path, { ...opts, method: 'PATCH', body, prefer: 'return=representation' }),
+  patch: <T>(
+    path: string,
+    body: unknown,
+    opts?: Omit<RequestOptions, 'method'>
+  ) =>
+    pgRequest<T>(path, {
+      ...opts,
+      method: 'PATCH',
+      body,
+      prefer: opts?.prefer ?? 'return=representation',
+    }),
 
-  delete: <T>(path: string, opts?: Omit<RequestOptions, 'method' | 'body'>) =>
-    pgRequest<T>(path, { ...opts, method: 'DELETE' }),
+  delete: <T>(
+    path: string,
+    opts?: Omit<RequestOptions, 'method' | 'body'>
+  ) => pgRequest<T>(path, { ...opts, method: 'DELETE' }),
 }
